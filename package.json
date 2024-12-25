@@ -1,0 +1,32 @@
+{
+  "name": "iot-platform",
+  "version": "1.0.0",
+  "description": "IoT Platform with dual database approach",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.0.0",
+    "@fastify/jwt": "^7.0.0",
+    "@fastify/swagger": "^8.0.0",
+    "@fastify/type-provider-typebox": "^3.0.0",
+    "@sinclair/typebox": "^0.30.0",
+    "dotenv": "^16.0.0",
+    "fastify": "^4.29.0",
+    "mongoose": "^7.0.0",
+    "mqtt": "^5.10.3",
+    "pg": "^8.11.3",
+    "pino": "^8.0.0",
+    "typeorm": "^0.3.17",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "^20.8.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.2.2"
+  }
+}
