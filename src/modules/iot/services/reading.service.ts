@@ -1,4 +1,4 @@
-import { Reading, IReading } from '../models/reading.model';
+import { Reading, type IReading } from '../models/reading.model';
 
 export class ReadingService {
   async createReading(data: Partial<IReading>): Promise<IReading> {

@@ -1,4 +1,4 @@
-import { FastifyInstance } from 'fastify';
+import type { FastifyInstance } from 'fastify';
 import { ReadingService } from '../services/reading.service';
 import {
   CreateReadingSchema,
@@ -20,7 +20,6 @@ export async function readingRoutes(fastify: FastifyInstance) {
   fastify.get('/', {
     schema: GetReadingsQuerySchema,
     handler: async (request, reply) => {
-      console.log('Call readings ##########');
       const query = request.query as any;
       if (query.startDate) query.startDate = new Date(query.startDate);
       if (query.endDate) query.endDate = new Date(query.endDate);

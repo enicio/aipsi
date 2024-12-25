@@ -2,7 +2,7 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import swagger from '@fastify/swagger';
-import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import { databasesPlugin } from './shared/plugins/databases';
 import { mqttPlugin } from './modules/mqtt/plugin';
 import { appConfig } from './shared/config/config';
@@ -27,9 +27,9 @@ export async function buildApp() {
     url: process.env.MQTT_BROKER_URL || 'mqtt://localhost:1883',
     topics: [
       'devices/readings',
-      'devices/+/status',  // + is a wildcard for device ID
-      'devices/+/commands'
-    ]
+      'devices/+/status', // + is a wildcard for device ID
+      'devices/+/commands',
+    ],
   });
 
   await app.register(swagger, {

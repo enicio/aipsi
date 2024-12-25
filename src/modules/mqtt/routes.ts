@@ -9,31 +9,31 @@ export async function mqttRoutes(fastify: FastifyInstance) {
     schema: {
       body: Type.Object({
         topic: Type.String(),
-        message: Type.Any()
-      })
+        message: Type.Any(),
+      }),
     },
     handler: async (request, reply) => {
       const { topic, message } = request.body as any;
       await mqttService.publishMessage(topic, message);
       return { success: true };
-    }
+    },
   });
 
   fastify.post('/devices/:deviceId/command', {
     schema: {
       params: Type.Object({
-        deviceId: Type.String()
+        deviceId: Type.String(),
       }),
       body: Type.Object({
         command: Type.String(),
-        payload: Type.Any()
-      })
+        payload: Type.Any(),
+      }),
     },
     handler: async (request, reply) => {
       const { deviceId } = request.params as any;
       const { command, payload } = request.body as any;
       await mqttService.publishDeviceCommand(deviceId, command, payload);
       return { success: true };
-    }
+    },
   });
 }

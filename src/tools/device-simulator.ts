@@ -1,4 +1,3 @@
-
 import mqtt from 'mqtt';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -23,10 +22,10 @@ class DeviceSimulator {
 
   constructor(
     private config: DeviceConfig,
-    private brokerUrl: string = 'mqtt://localhost:1883'
+    private brokerUrl: string = 'mqtt://localhost:1883',
   ) {
     this.client = mqtt.connect(this.brokerUrl, {
-      clientId: `device_${this.config.id}`
+      clientId: `device_${this.config.id}`,
     });
 
     this.setupEventHandlers();
@@ -69,24 +68,31 @@ class DeviceSimulator {
     });
   }
 
-  private generateReading(sensor: typeof this.config.sensors[0]): number {
-    return Number((Math.random() * (sensor.max - sensor.min) + sensor.min).toFixed(2));
+  private generateReading(sensor: (typeof this.config.sensors)[0]): number {
+    return Number(
+      (Math.random() * (sensor.max - sensor.min) + sensor.min).toFixed(2),
+    );
   }
 
   private async startPublishing(): Promise<void> {
     // Generate initial readings
-    this.config.sensors.forEach(sensor => {
+    this.config.sensors.forEach((sensor) => {
       this.readings[sensor.name] = this.generateReading(sensor);
     });
 
     // Publish readings every 5 seconds
     this.publishInterval = setInterval(() => {
       // Update readings with small random changes
-      this.config.sensors.forEach(sensor => {
+      this.config.sensors.forEach((sensor) => {
         const currentValue = this.readings[sensor.name];
         const maxChange = (sensor.max - sensor.min) * 0.02; // 2% max change
         const change = (Math.random() - 0.5) * 2 * maxChange;
-        this.readings[sensor.name] = Number(Math.min(sensor.max, Math.max(sensor.min, currentValue + change)).toFixed(2));
+        this.readings[sensor.name] = Number(
+          Math.min(
+            sensor.max,
+            Math.max(sensor.min, currentValue + change),
+          ).toFixed(2),
+        );
       });
 
       const message = {
@@ -94,10 +100,12 @@ class DeviceSimulator {
         enterpriseId: this.config.enterpriseId,
         type: this.config.type,
         timestamp: new Date().toISOString(),
-        readings: this.readings
+        readings: this.readings,
       };
 
-      this.client.publish('devices/readings', JSON.stringify(message), { qos: 1 });
+      this.client.publish('devices/readings', JSON.stringify(message), {
+        qos: 1,
+      });
       console.log('Published readings:', message);
     }, 5000);
   }
@@ -112,7 +120,7 @@ class DeviceSimulator {
         break;
 
       case 'reset':
-        this.config.sensors.forEach(sensor => {
+        this.config.sensors.forEach((sensor) => {
           this.readings[sensor.name] = this.generateReading(sensor);
         });
         break;
@@ -138,8 +146,8 @@ const device = new DeviceSimulator({
   sensors: [
     { name: 'temperature', min: 18, max: 28, unit: '°C' },
     { name: 'humidity', min: 30, max: 70, unit: '%' },
-    { name: 'co2', min: 400, max: 2000, unit: 'ppm' }
-  ]
+    { name: 'co2', min: 400, max: 2000, unit: 'ppm' },
+  ],
 });
 
 // Handle process termination

@@ -15,17 +15,21 @@ export class MqttService {
           } else {
             resolve();
           }
-        }
+        },
       );
     });
   }
 
-  async publishDeviceCommand(deviceId: string, command: string, payload: any): Promise<void> {
+  async publishDeviceCommand(
+    deviceId: string,
+    command: string,
+    payload: any,
+  ): Promise<void> {
     const topic = `devices/${deviceId}/commands`;
     const message = {
       command,
       payload,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     await this.publishMessage(topic, message);
