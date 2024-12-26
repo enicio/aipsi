@@ -2,6 +2,7 @@ import fp from 'fastify-plugin';
 import mongoose from 'mongoose';
 import { DataSource } from 'typeorm';
 import { appConfig } from '../config/config';
+import { typeormConfig } from '../database/typeorm.config';
 
 export const databasesPlugin = fp(
   async (fastify) => {
@@ -9,16 +10,7 @@ export const databasesPlugin = fp(
     const mongoConnection = await mongoose.connect(appConfig.MONGO_URI);
 
     // PostgreSQL Connection
-    const postgresConnection = new DataSource({
-      type: 'postgres',
-      host: appConfig.POSTGRES_HOST,
-      port: appConfig.POSTGRES_PORT,
-      username: appConfig.POSTGRES_USER,
-      password: appConfig.POSTGRES_PASSWORD,
-      database: appConfig.POSTGRES_DB,
-      synchronize: true, // Be careful with this in production
-      entities: ['src/modules/**/entities/*.entity.ts'],
-    });
+    const postgresConnection = new DataSource(typeormConfig);
 
     await postgresConnection.initialize();
 
