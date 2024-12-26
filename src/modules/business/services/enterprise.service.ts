@@ -20,7 +20,7 @@ export class EnterpriseService {
   async findById(id: string): Promise<Enterprise | null> {
     return this.repository.findOne({
       where: { id },
-      relations: ['employees', 'devices']
+      relations: ['employees', 'devices'],
     });
   }
 }

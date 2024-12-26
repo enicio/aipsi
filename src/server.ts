@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { buildApp } from './app';
 import { appConfig } from './shared/config/config';
 

@@ -10,14 +10,14 @@ export async function enterpriseRoutes(fastify: FastifyInstance) {
     handler: async (request, reply) => {
       const result = await enterpriseService.create(request.body);
       return reply.code(201).send(result);
-    }
+    },
   });
 
   fastify.get('/', {
     handler: async (request, reply) => {
       const enterprises = await enterpriseService.findAll();
       return reply.send(enterprises);
-    }
+    },
   });
 
   fastify.get('/:id', {
@@ -29,6 +29,6 @@ export async function enterpriseRoutes(fastify: FastifyInstance) {
         return reply.code(404).send({ message: 'Enterprise not found' });
       }
       return reply.send(enterprise);
-    }
+    },
   });
 }
