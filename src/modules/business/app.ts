@@ -3,12 +3,10 @@ import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import swagger from '@fastify/swagger';
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
-import { databasesPlugin } from './shared/plugins/databases';
-import { mqttPlugin } from './modules/mqtt/plugin';
-import { appConfig } from './shared/config/config';
-// import businessModule from './modules/business';
-import iotModule from './modules/iot';
-import mqttModule from './modules/mqtt';
+import businessModule from './';
+import { databasesPlugin } from '../../shared/plugins/databases';
+import { appConfig } from '../../shared/config/config';
+
 
 export async function buildApp() {
   const app = Fastify({
@@ -22,15 +20,6 @@ export async function buildApp() {
   // Register database connections
   await app.register(databasesPlugin);
 
-  // Register MQTT plugin
-  await app.register(mqttPlugin, {
-    url: process.env.MQTT_BROKER_URL || 'mqtt://localhost:1883',
-    topics: [
-      'devices/readings',
-      'devices/+/status', // + is a wildcard for device ID
-      'devices/+/commands',
-    ],
-  });
 
   await app.register(swagger, {
     openapi: {
@@ -70,9 +59,7 @@ export async function buildApp() {
   app.register(
     async function apiRoutes(fastify) {
       // Register application modules under /api prefix
-      // await fastify.register(businessModule, { prefix: '/business' });
-      await fastify.register(iotModule, { prefix: '/iot' });
-      await fastify.register(mqttModule, { prefix: '/mqtt' });
+      await fastify.register(businessModule, { prefix: '/business' });
 
       // Add a health check route
       fastify.get('/health', async () => {
