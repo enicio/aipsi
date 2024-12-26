@@ -4,7 +4,7 @@
   "description": "IoT Platform with dual database approach",
   "main": "dist/server.js",
   "scripts": {
-    "start:bussines:module": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/modules/business/server.ts",
+    "start:business:module": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/modules/business/server.ts",
     "build": "rimraf dist && tsc",
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/server.ts",
     "start": "NODE_ENV=production node dist/server.js",
