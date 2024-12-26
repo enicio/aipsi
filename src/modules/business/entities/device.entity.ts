@@ -19,6 +19,9 @@ export class Device {
   @Column()
   type: string;
 
+  @Column({ type: 'varchar', length: 50, unique: true })
+  serialNumber: string;
+
   @Column({ nullable: true })
   location: string;
 
