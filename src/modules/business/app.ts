@@ -7,7 +7,6 @@ import businessModule from './';
 import { databasesPlugin } from '../../shared/plugins/databases';
 import { appConfig } from '../../shared/config/config';
 
-
 export async function buildApp() {
   const app = Fastify({
     logger: true,
@@ -19,7 +18,6 @@ export async function buildApp() {
 
   // Register database connections
   await app.register(databasesPlugin);
-
 
   await app.register(swagger, {
     openapi: {
