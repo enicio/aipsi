@@ -70,9 +70,9 @@ export async function buildApp() {
   app.register(
     async function apiRoutes(fastify) {
       // Register application modules under /api prefix
-      await fastify.register(businessModule, { prefix: '/business' });
-      await fastify.register(iotModule, { prefix: '/iot' });
-      await fastify.register(mqttModule, { prefix: '/mqtt' });
+      await fastify.register(businessModule);
+      await fastify.register(iotModule);
+      await fastify.register(mqttModule);
 
       // Add a health check route
       fastify.get('/health', async () => {
